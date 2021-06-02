@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const glob = require('glob')
 
+const webpack = require('webpack')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -25,7 +26,7 @@ const getFiles = filesPath => {
 }
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: getFiles(path.resolve(__dirname, 'src/**/*.{js,ts,jsx,tsx}')),
   // entry: {
   //   index: 'E:\\test\\ts-webpack\\src\\index.ts',
@@ -67,6 +68,7 @@ module.exports = {
       inject: false,
     }),
     new CleanWebpackPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
   ],
   resolve: {
     extensions: ['.ts', '.js', '.tsx', '.jsx'],
@@ -85,6 +87,13 @@ module.exports = {
       }),
     ],
   },
+  devServer: {
+    contentBase: path.join(__dirname, '/dist/'),
+    inline: true,
+    host: 'localhost',
+    port: 8080,
+  },
+
   // externals: {
   //   THREE: 'THREE',
   // },
