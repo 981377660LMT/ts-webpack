@@ -15,7 +15,7 @@ npm run dev
 npm run serve
 ```
 
-### 生产环境打包
+### 生产环境打包，CDN 引入 three.js
 
 ```
 npm run build

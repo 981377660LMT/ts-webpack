@@ -13,7 +13,7 @@ module.exports = merge(webpackCommonConfig, {
     path: distPath,
     publicPath: '/dist/',
     filename: 'js/[name].[contenthash:8].js',
-    // chunkFilename: '[name].[contentHash:8].js',
+    // chunkFilename: 'js/[name].[contentHash:8].js',
   },
   module: {
     rules: [
@@ -51,7 +51,7 @@ module.exports = merge(webpackCommonConfig, {
           options: {
             name: '[name]_[hash].[ext]',
             outputPath: '/images/',
-            limit: 20480,
+            limit: 10 * 1024,
           },
         },
       },

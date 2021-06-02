@@ -78,7 +78,7 @@ class MyRenderer {
       throw Error('需要先初始化')
     }
 
-    this.mesh.rotation.set(0, 0, 1)
+    this.mesh.rotation.set(0, 0, 100)
     this.renderer.render(this.scene, this.camera)
     // requestAnimationFrame(this.render.apply(this))
   }

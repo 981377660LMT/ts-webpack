@@ -5,16 +5,6 @@ const { distPath } = require('./getPath')
 
 module.exports = merge(webpackCommonConfig, {
   mode: 'development',
-  watch: true,
-  watchOptions: {
-    ignored: ['/node_modules'],
-  },
-  output: {
-    path: distPath,
-    publicPath: '/dist/',
-    filename: 'js/[name].js',
-    chunkFilename: 'js/[name].js',
-  },
   module: {
     rules: [
       {
@@ -54,6 +44,16 @@ module.exports = merge(webpackCommonConfig, {
     new webpack.DefinePlugin({
       ENV: JSON.stringify('development'),
     }),
+    new webpack.HotModuleReplacementPlugin(),
   ],
   devtool: 'inline-source-map',
+  devServer: {
+    contentBase: distPath,
+    open: true,
+    port: 8080,
+    progress: true,
+    hot: true,
+    compress: true,
+    hotOnly: true,
+  },
 })

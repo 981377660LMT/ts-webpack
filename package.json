@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack --config config/webpack/webpack.dev.js",
-    "serve": "webpack serve --config config/webpack/webpack.dev.js",
-    "build": "webpack --config config/webpack/webpack.prod.js"
+    "serve": "webpack serve --config config/webpack/webpack.devServe.js",
+    "build": "webpack --config config/webpack/webpack.prod.js",
+    "dll": "webpack --config config/webpack/webpack.dll.js"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
     "css-minimizer-webpack-plugin": "^3.0.1",
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^6.2.10",
+    "happypack": "^5.0.1",
     "html-webpack-plugin": "^5.3.1",
     "mini-css-extract-plugin": "^1.6.0",
     "postcss-loader": "^5.3.0",
@@ -39,7 +41,8 @@
     "webpack": "^5.24.3",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2",
-    "webpack-merge": "^5.7.3"
+    "webpack-merge": "^5.7.3",
+    "webpack-parallel-uglify-plugin": "^2.0.0"
   },
   "dependencies": {
     "core-js": "^3.13.1",

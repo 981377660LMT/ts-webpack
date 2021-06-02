@@ -10,18 +10,27 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader',
         include: srcPath,
         exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+            id: 'js',
+          },
+        },
       },
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader',
         include: srcPath,
         exclude: /node_modules/,
-        options: {
-          // disable type checker - we will use it in fork plugin
-          transpileOnly: true,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            // disable type checker - we will use it in fork plugin
+            transpileOnly: true,
+            happyPackMode: true,
+          },
         },
       },
     ],
