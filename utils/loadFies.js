@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const glob = require('glob')
+
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const appDirectory = fs.realpathSync(process.cwd())
@@ -37,4 +38,5 @@ const htmlTemplates = Object.keys(entries).map(
     })
 )
 console.log(JSON.stringify(htmlTemplates))
+
 module.exports = { entries, htmlTemplates }

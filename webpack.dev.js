@@ -8,10 +8,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const ProgressPlugin = require('progress-webpack-plugin')
 
-const { entires, templates } = require('./utils')
+const { entries, htmlTemplates } = require('./utils/loadFies')
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   // entry: getFiles(path.resolve(__dirname, 'src/**/*.{js,ts,jsx,tsx}')),
   entry: entries,
   watch: true,
@@ -89,18 +89,7 @@ module.exports = {
   plugins: [
     new ProgressPlugin(),
     new ForkTsCheckerWebpackPlugin(),
-    ...templates,
-    // new HtmlWebpackPlugin({
-    //   template: path.resolve(__dirname, 'index.html'),
-    //   inject: 'body',
-    //   title: 'three js demo',
-    //   minify: {
-    //     removeComments: true,
-    //     collapseWhitespace: true,
-    //   },
-    //   // 只注入main.js
-    //   chunks: ['main'],
-    // }),
+    ...htmlTemplates,
     new CleanWebpackPlugin(),
   ],
   resolve: {
@@ -111,19 +100,6 @@ module.exports = {
     },
   },
   devtool: 'inline-source-map',
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          format: {
-            comments: false,
-          },
-        },
-        extractComments: false,
-      }),
-    ],
-  },
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
     open: true,
