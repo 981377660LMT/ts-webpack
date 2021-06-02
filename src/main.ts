@@ -3,6 +3,8 @@
 
 import * as THREE from 'three'
 
+import '@/a.css'
+
 const width = 300
 const height = 400
 const canvas = document.getElementById('demo-canvas') as HTMLCanvasElement

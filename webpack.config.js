@@ -26,10 +26,10 @@ const getFiles = filesPath => {
 
 module.exports = {
   mode: 'production',
-  entry: getFiles(path.resolve(__dirname, 'src/**/*.{js,ts,jsx,tsx}')),
-  // entry: {
-  //   index: 'E:\\test\\ts-webpack\\src\\index.ts',
-  // },
+  // entry: getFiles(path.resolve(__dirname, 'src/**/*.{js,ts,jsx,tsx}')),
+  entry: {
+    main: path.resolve(__dirname, 'src', 'main.ts'),
+  },
   watch: true,
   watchOptions: {
     //默认为空，不监听的文件或者文件夹，支持正册匹配
@@ -38,7 +38,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/dist/',
-    filename: '[name].js',
+    filename: 'js/[name].js',
     chunkFilename: '[name].js',
   },
   module: {
@@ -101,7 +101,12 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'index.html'),
-      inject: false,
+      inject: 'body',
+      title: 'three js demo',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+      },
     }),
     new CleanWebpackPlugin(),
   ],
@@ -109,7 +114,7 @@ module.exports = {
     extensions: ['.ts', '.js', '.tsx', '.jsx'],
     mainFiles: ['index', 'main'],
     alias: {
-      '@': path.resolve(__dirname, '../src'),
+      '@': path.resolve(__dirname, 'src'),
     },
   },
   devtool: 'inline-source-map',
