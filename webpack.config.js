@@ -36,20 +36,41 @@ module.exports = {
     ignored: ['/node_modules/', 'dist'],
   },
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist'),
     publicPath: '/dist/',
     filename: '[name].js',
     chunkFilename: '[name].js',
   },
   module: {
     rules: [
+      // {
+      //   test: /\.scss$/,
+      //   use: [
+      //     'style-loader',
+      //     {
+      //       loader: 'css-loader',
+      //       options: {
+      //         // importLoaders: 2是在css-loader 之后指定1个数量的loader（即 postcss-loader）来处理import进来的资源
+      //         importLoaders: 2,
+      //         // 开启css模块化
+      //         // modules: true,
+      //       },
+      //     },
+      //     'sass-loader',
+      //     'postcss-loader',
+      //   ],
+      // },
       {
-        test: /.jsx?$/,
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
       },
       {
-        test: /.tsx?$/,
+        test: /\.tsx?$/,
         loader: 'ts-loader',
         exclude: /node_modules/,
         options: {
@@ -57,19 +78,39 @@ module.exports = {
           transpileOnly: true,
         },
       },
+      {
+        test: /\.(jpg|jpeg|png|gif)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            name: '[name]_[hash].[ext]',
+            // 图片打包到dist下的images
+            outputPath: 'images/',
+            limit: 20480,
+          },
+        },
+      },
+      {
+        test: /\.(eot|woff2|woff|ttf|svg)$/,
+        loader: 'file-loader',
+      },
     ],
   },
   plugins: [
     new ProgressPlugin(),
     new ForkTsCheckerWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'index.html'),
+      template: path.resolve(__dirname, 'index.html'),
       inject: false,
     }),
     new CleanWebpackPlugin(),
   ],
   resolve: {
     extensions: ['.ts', '.js', '.tsx', '.jsx'],
+    mainFiles: ['index', 'main'],
+    alias: {
+      '@': path.resolve(__dirname, '../src'),
+    },
   },
   devtool: 'inline-source-map',
   optimization: {
@@ -84,6 +125,12 @@ module.exports = {
         extractComments: false,
       }),
     ],
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, 'dist'),
+    open: true,
+    port: 8080,
+    hot: true, //开启Hot Module Replacement的功能},
   },
   // externals: {
   //   THREE: 'THREE',

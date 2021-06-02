@@ -64,7 +64,7 @@ class MyRenderer {
   initAll() {
     this.initCamera()
     this.initRenderer()
-    this.initScene()
+    this.initMesh()
     this.initScene()
     this.isInit = true
 

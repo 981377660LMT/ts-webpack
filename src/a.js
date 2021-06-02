@@ -1,6 +1,9 @@
-const a = () => {
-  console.log(2)
-  return new Promise((resolve, reject) => {})
-}
+// const a = () => {
+//   console.log(2)
+//   return new Promise((resolve, reject) => {})
+// }
 
-a()
+// a()
+
+import './a.css'
+console.log(1)
