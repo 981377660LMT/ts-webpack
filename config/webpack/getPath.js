@@ -34,7 +34,11 @@ const htmlTemplates = Object.keys(entries).map(
       minify: {
         removeComments: true,
         collapseWhitespace: true,
+        minifyCSS: true,
+        minifyJS: true,
+        minifyURLs: true,
       },
+      scriptLoading: 'blocking',
     })
 )
 
