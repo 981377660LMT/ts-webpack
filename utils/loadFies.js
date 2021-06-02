@@ -1,6 +1,8 @@
 const fs = require('fs')
 const path = require('path')
 const glob = require('glob')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
 const appDirectory = fs.realpathSync(process.cwd())
 
 // 获取文件公共方法
@@ -17,4 +19,22 @@ const getFiles = filesPath => {
   return obj
 }
 
-console.log(getFiles('src/**/*.{js,ts,jsx,tsx}'))
+// 不允许重名
+const entries = getFiles('src/core/*.{js,ts,jsx,tsx}')
+
+const htmlTemplates = Object.keys(entries).map(
+  fileName =>
+    new HtmlWebpackPlugin({
+      template: path.resolve(appDirectory, 'index.html'),
+      filename: `${fileName}.html`,
+      chunks: [`${fileName}`],
+      inject: 'body',
+      title: `${fileName}`,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+      },
+    })
+)
+console.log(JSON.stringify(htmlTemplates))
+module.exports = { entries, htmlTemplates }

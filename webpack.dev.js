@@ -8,28 +8,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const ProgressPlugin = require('progress-webpack-plugin')
 
-const appDirectory = fs.realpathSync(process.cwd())
-
-// 获取文件公共方法
-const getFiles = filesPath => {
-  const files = glob.sync(filesPath)
-  const obj = {}
-
-  files.forEach(file => {
-    const extname = path.extname(file) // 扩展名 eg: .html
-    const basename = path.basename(file, extname) // 文件名 eg: index
-    obj[basename] = path.resolve(appDirectory, file)
-  })
-
-  return obj
-}
+const { entires, templates } = require('./utils')
 
 module.exports = {
   mode: 'production',
   // entry: getFiles(path.resolve(__dirname, 'src/**/*.{js,ts,jsx,tsx}')),
-  entry: {
-    main: path.resolve(__dirname, 'src', 'main.ts'),
-  },
+  entry: entries,
   watch: true,
   watchOptions: {
     //默认为空，不监听的文件或者文件夹，支持正册匹配
@@ -91,7 +75,7 @@ module.exports = {
           options: {
             name: '[name]_[hash].[ext]',
             // 图片打包到dist下的images
-            outputPath: 'images/',
+            outputPath: '/images/',
             limit: 20480,
           },
         },
@@ -105,17 +89,18 @@ module.exports = {
   plugins: [
     new ProgressPlugin(),
     new ForkTsCheckerWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'index.html'),
-      inject: 'body',
-      title: 'three js demo',
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-      },
-      // 只注入main.js
-      chunks: ['main'],
-    }),
+    ...templates,
+    // new HtmlWebpackPlugin({
+    //   template: path.resolve(__dirname, 'index.html'),
+    //   inject: 'body',
+    //   title: 'three js demo',
+    //   minify: {
+    //     removeComments: true,
+    //     collapseWhitespace: true,
+    //   },
+    //   // 只注入main.js
+    //   chunks: ['main'],
+    // }),
     new CleanWebpackPlugin(),
   ],
   resolve: {
@@ -143,7 +128,9 @@ module.exports = {
     contentBase: path.resolve(__dirname, 'dist'),
     open: true,
     port: 8080,
+    progress: true, // 显示打包的进度条
     hot: true, //开启Hot Module Replacement的功能},
+    compress: true, // 启动 gzip 压缩
   },
   // externals: {
   //   THREE: 'THREE',

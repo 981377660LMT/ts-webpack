@@ -7,7 +7,7 @@ import '@/a.scss'
 
 const width = 300
 const height = 400
-const canvas = document.getElementById('demo-canvas') as HTMLCanvasElement
+const canvas = document.getElementById('canvas') as HTMLCanvasElement
 
 class MyRenderer {
   constructor(
