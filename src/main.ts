@@ -3,7 +3,7 @@
 
 import * as THREE from 'three'
 
-import '@/a.css'
+import '@/a.scss'
 
 const width = 300
 const height = 400

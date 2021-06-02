@@ -43,26 +43,32 @@ module.exports = {
   },
   module: {
     rules: [
-      // {
-      //   test: /\.scss$/,
-      //   use: [
-      //     'style-loader',
-      //     {
-      //       loader: 'css-loader',
-      //       options: {
-      //         // importLoaders: 2是在css-loader 之后指定1个数量的loader（即 postcss-loader）来处理import进来的资源
-      //         importLoaders: 2,
-      //         // 开启css模块化
-      //         // modules: true,
-      //       },
-      //     },
-      //     'sass-loader',
-      //     'postcss-loader',
-      //   ],
-      // },
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+            },
+          },
+          'sass-loader',
+          'postcss-loader',
+        ],
+      },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            },
+          },
+          'postcss-loader',
+        ],
       },
       {
         test: /\.jsx?$/,
@@ -107,6 +113,8 @@ module.exports = {
         removeComments: true,
         collapseWhitespace: true,
       },
+      // 只注入main.js
+      chunks: ['main'],
     }),
     new CleanWebpackPlugin(),
   ],
