@@ -34,7 +34,7 @@ module.exports = merge(webpackCommonConfig, {
       {
         test: /\.css$/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
@@ -49,7 +49,7 @@ module.exports = merge(webpackCommonConfig, {
         use: {
           loader: 'url-loader',
           options: {
-            name: '[name]_[hash].[ext]',
+            name: '[name]_[contenthash:8].[ext]',
             outputPath: '/images/',
             limit: 10 * 1024,
           },
@@ -57,14 +57,20 @@ module.exports = merge(webpackCommonConfig, {
       },
       {
         test: /\.(eot|woff2|woff|ttf|svg)$/,
-        loader: 'file-loader',
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name]_[contenthash:8].[ext]',
+            outputPath: '/font/',
+          },
+        },
       },
     ],
   },
   plugins: [
     // 抽离 css 文件
     new MiniCssExtractPlugin({
-      filename: 'css/main.[contenthash:8].css',
+      filename: 'css/[name].[contenthash:8].css',
     }),
     new webpack.DefinePlugin({
       ENV: JSON.stringify('production'),
@@ -98,5 +104,5 @@ module.exports = merge(webpackCommonConfig, {
       },
     },
   },
-  devtool: 'inline-source-map',
+  devtool: 'hidden-source-map',
 })

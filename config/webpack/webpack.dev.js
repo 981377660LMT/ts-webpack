@@ -45,8 +45,24 @@ module.exports = merge(webpackCommonConfig, {
         ],
       },
       {
-        test: /\.(jpg|jpeg|png|gif|eot|woff2|woff|ttf|svg)$/,
-        loader: 'file-loader',
+        test: /\.(jpg|jpeg|png|gif)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'images/',
+          },
+        },
+      },
+      {
+        test: /\.(eot|woff2|woff|ttf|svg)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            output: 'font/',
+          },
+        },
       },
     ],
   },
@@ -55,5 +71,5 @@ module.exports = merge(webpackCommonConfig, {
       ENV: JSON.stringify('development'),
     }),
   ],
-  devtool: 'inline-source-map',
+  devtool: 'eval-cheap-module-source-map',
 })

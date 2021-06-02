@@ -46,7 +46,7 @@ module.exports = merge(webpackCommonConfig, {
     }),
     new webpack.HotModuleReplacementPlugin(),
   ],
-  devtool: 'inline-source-map',
+  devtool: 'eval-cheap-module-source-map',
   devServer: {
     contentBase: distPath,
     open: true,

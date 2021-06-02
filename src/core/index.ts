@@ -4,6 +4,7 @@
 import * as THREE from 'three'
 
 import '@/a.scss'
+import '../kurisu.png'
 
 const width = 300
 const height = 400
