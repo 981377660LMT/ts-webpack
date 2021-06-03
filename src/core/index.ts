@@ -23,7 +23,8 @@ class MyRenderer {
     private mesh: THREE.Mesh = new THREE.Mesh(),
     private renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({ canvas }),
     private scene: THREE.Scene = new THREE.Scene(),
-    private isInit: boolean = false
+    private isInit: boolean = false,
+    private currentAngle: number = 0
   ) {}
 
   private initCamera() {
@@ -60,30 +61,33 @@ class MyRenderer {
     this.scene.add(this.mesh)
   }
 
-  private animate() {
-    const now = Date.now()
-  }
-
-  initAll() {
+  private initAll() {
     this.initCamera()
     this.initRenderer()
     this.initMesh()
     this.initScene()
-    this.isInit = true
-
     return this
   }
 
   render() {
+    this.initAll()
+    this.renderer.render(this.scene, this.camera)
+    this.isInit = true
+    return this
+  }
+
+  rotate() {
     if (!this.isInit) {
       throw Error('需要先初始化')
     }
 
-    this.mesh.rotation.set(0, 0, 100)
+    this.currentAngle += 0.001
+    this.mesh.rotation.set(0, 0, this.currentAngle)
     this.renderer.render(this.scene, this.camera)
-    // requestAnimationFrame(this.render.apply(this))
+    requestAnimationFrame(this.rotate.bind(this))
+    return this
   }
 }
 
 const myRenderer = new MyRenderer()
-myRenderer.initAll().render()
+myRenderer.render().rotate()
