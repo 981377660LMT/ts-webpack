@@ -12,12 +12,15 @@ module.exports = {
         test: /\.(js|jsx|tsx|ts)$/,
         include: srcPath,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+            },
           },
-        },
+          // 'eslint-loader',
+        ],
       },
     ],
   },

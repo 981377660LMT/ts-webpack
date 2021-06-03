@@ -55,5 +55,6 @@ module.exports = merge(webpackCommonConfig, {
     hot: true,
     compress: true,
     hotOnly: true,
+    overlay: true,
   },
 })
